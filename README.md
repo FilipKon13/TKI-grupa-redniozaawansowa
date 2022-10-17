@@ -1,2 +1,2 @@
-# TKI-grupa-redniozaawansowa
+# TKI grupa średniozaawansowana
 Materiały z Tarnowskiego Koła Informatycznego
