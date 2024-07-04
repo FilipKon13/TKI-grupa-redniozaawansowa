@@ -1,0 +1,36 @@
+\documentclass[]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\newcommand{\Oh}[1]{\mathcal{O}{\left(#1\right)}}
+
+\newgeometry{left=4cm, right=4cm}
+
+\author{Filip Konieczny}
+\date{4 lipca 2024}
+\title{Omówienie zadania \texttt{Książka telefoniczna}}
+
+\begin{document}
+\maketitle
+\section{Omówienie}
+
+Po przetłumaczeniu treści na język grafowy zadanie jest następujące: mamy podany graf oraz ciąg zapytań o pary wierzchołków. Dla każdego zapytania należy wypisać, czy oba wierzchołki znajdują się w jednej spójnej składowej.
+
+Pokażemy dwa sposoby jak można rozwiązać to zadanie:
+
+\subsection*{Przeglądanie grafu}
+
+Możemy ponumerować składowe grafu, tak, żeby każdy wierzchołek wiedział, jaki jest numer składowej, w której się znajduje (efektywnie znaczy to, że wszystkie składowe zostały pokolorowane na różne kolory). Po tym odpowiadanie na zapytania jest już proste: dwa wierzchołki są w jednej składowej wtedy i tylko wtedy gdy mają ten sam kolor.
+
+Kolorowanie/numerowanie składowych można zrealizować za pomocą dowolnego algorytmu przeglądania grafu, np. DFS lub BFS. Uzyskujemy algorytm działający w złożoności $\Oh{n + m + q}$, czyli liniowej.
+
+\subsection*{Find-Union}
+
+Struktura Find-Union także pozwala nam rozwiązać to zadanie. Dodanie krawędzi to operacja \texttt{Union} (o ile wierzchołki są w różnych zbiorach). Zapytanie czy są w jednej spójnej składowej to porównanie ich reprezentantów, których znajdujemy za pomocą operacji \texttt{Find}.
+
+Uzyskane rozwiązanie działa w złożoności $\Oh{n+(m+q)T(n)}$, gdzie $T(n)$ to amortyzowany czas działania operacji \texttt{Find}, zależny od implementacji. Warto zauważyć, że to rozwiązanie jest poprawne, kiedy krawędzie oraz zapytania są wymieszane, tzn. musimy odpowiadać na zapytania na grafie, któremu może przybywać krawędzi. 
+
+
+\end{document}

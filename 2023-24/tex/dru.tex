@@ -1,0 +1,35 @@
+\documentclass[]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\newcommand{\Oh}[1]{\mathcal{O}{\left(#1\right)}}
+
+\newgeometry{left=4cm, right=4cm}
+
+\author{Filip Konieczny}
+\date{4 lipca 2024}
+\title{Omówienie zadania \texttt{Liczby drugie}}
+
+\begin{document}
+\maketitle
+\section{Omówienie}
+
+Liczba jest \textit{druga}, gdy jej zapis w systemie dziesiętnym jest konkatenacją zapisów w systemie dziesiętnym dwóch liczb pierwszych. Na wejściu mamy liczbę i mamy wypisać czy jest ona \textit{druga}.
+
+Liczby na wejściu są rzędu maksymalnie $10^{13}$. Jeśli zastanowić się nad tym chwilę, to oznacza to, że liczba podana na wejściu ma zapis dziesiętny długości co najwyżej 14. Jedna z kluczowych obserwacji w tym zadaniu, to fakt, że nie mamy zbyt dużo podziałów do przetestowania: w najgorszym wypadku zapis dziesiętny liczby na wejściu można podzielić na 13 sposobów!
+
+Dla każdego podziału musimy sprawdzić czy jest poprawny, tj. czy obie uzyskane w ten sposób zapisy są poprawne (tj. nie mają zer wiodących) oraz czy reprezentują liczby pierwsze. Ponieważ liczby na wejściu są maksymalnie rzędu $10^{13}$, to spokojnie możemy użyć algorytmu działającego w czasie $\Oh{\sqrt{n}}$ sprawdzający czy liczba jest pierwsza.
+
+Otrzymany w ten sposób algorytm sprawdza czy liczba $n$ zapisana na wejściu jest \textit{druga} w czasie $\Oh{\sqrt{n}\log{n}}$, co jest wystarczające w tym zadaniu.
+
+Pozostaje kilka kwestii implementacyjnych. Trzeba umieć generować podziały liczby z wejścia i testować, czy są to reprezentacje liczb pierwszych. Aby zaadresować pierwszy z nich, można użyć metody \texttt{substr} na obiekcie \texttt{std::string}, która zwraca podnapis danego napisu. Z kolei, aby przetestować czy reprezentacja jest liczbą pierwszą, to 
+
+\begin{itemize}
+    \item Należy sprawdzić czy nie zaczyna się zerem,
+    \item Należy sprawdzić czy jest liczbą pierwszą -- do tego można użyć wspomnianego algorytmu pierwiastkowego oraz użyć \texttt{std::stoll} aby zamienić napis na odpowiadający \texttt{long long} (wynik może nie zmieścić się w typie \texttt{int}).
+\end{itemize}
+
+
+\end{document}

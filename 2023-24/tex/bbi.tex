@@ -1,0 +1,35 @@
+\documentclass[]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\newgeometry{left=4cm, right=4cm}
+
+\author{Filip Konieczny}
+\date{4 lipca 2024}
+\title{Omówienie zadania \texttt{bbi}}
+
+\begin{document}
+\maketitle
+\section{Omówienie}
+
+W zadaniu należy zamienić liczbę całkowitą nieujemną z wejścia na jej reprezentację w systemie dwójkowym (16 bitów).
+
+Oczekiwanym rozwiązaniem jest użycie standardowego algorytmu na zamianę liczby na inną bazę: w przypadku bazy o podstawie dwa algorytm jest następujący:
+
+\begin{itemize}
+    \item Weź resztę z dzielenia przez 2 danej liczby; jest to kolejna cyfra wyniku;
+    \item Podziel daną liczbę przez 2 (zaokrąglając w dół);
+    \item Powtarzaj dopóki liczba jest większa od 0.
+\end{itemize}
+
+Powyższy ciąg operacja zwróci kolejne cyfry wyniku w kolejności od najmniej znaczącej (tj. cyfry jedności) do najbardziej znaczącej. Otrzymaną reprezentację należy uzupełnić zerami, aby otrzymać napis długości 16. Uwaga na przypadek, kiedy liczba jest równa 0.
+
+Istnieje też krótsze (przynajmniej jeśli chodzi o kod) rozwiązanie, które korzysta z biblioteki standardowej, a konkretnie strucktury \texttt{std::bitset} (można ją znaleźć w nagłówku \texttt{<bitset>}). Typowo służy ona do utrzymywania masek bitowych w skompresowany sposób, by przyspieszyć wykonywanie na nich pewnych operacji.
+
+W naszym przypadku pomocne będą dwie zaimplementowane przez \texttt{std::bitset} własności, mianowicie: przeciążony \texttt{operator}\texttt{<}\texttt{<} dla \texttt{std::ostream} (co znaczy tyle, że można \texttt{std::bitset} wypisać przy pomocy \texttt{std::cout}) oraz konstruktor przyjmujący liczbę całkowitą i tworzący \texttt{std::bitset} z jej reprezentacją binarną. Innymi słowy \texttt{std::bitset<16> bs(x);} tworzy bitset o wymaganej szerokości i z reprezentacją binarną liczby \texttt{x}. Wystarczy go więc po prostu wypisać.
+
+
+
+\end{document}

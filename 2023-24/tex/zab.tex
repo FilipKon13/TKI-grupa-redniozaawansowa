@@ -1,0 +1,32 @@
+\documentclass[]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\newcommand{\Oh}[1]{\mathcal{O}{\left(#1\right)}}
+
+\newgeometry{left=4cm, right=4cm}
+
+\author{Filip Konieczny}
+\date{4 lipca 2024}
+\title{Omówienie zadania \texttt{Æabka Bajtozja}}
+
+\begin{document}
+\maketitle
+\section{Omówienie}
+
+Żabka skacze po kamieniach umieszczonych na płaszczyźnie i chce się dowiedzieć jak daleko może się dostać od miejsca, w którym się aktualnie znajduje.
+
+Spróbujmy skonstruować graf odpowiadający historii. Dwa kamienie (wierzchołki) łączymy ze sobą krawędzią, jeśli odległość między nimi jest $\leq s$. Problem wygląda teraz następująco: żaba jest w jednym z wierzchołków i może dostać się do dowolnego wierzchołka w spójnej składowej. Wybieramy oczywiście wierzchołek znajdujący się najdalej od jej miejsca startu i z tego wierzchołka skaczemy jak najdalej możemy -- wynik to odległość tego wierzchołka od wierzchołka startowego plus $s$.
+
+
+\section{Implementacja}
+
+Jak skonstruować graf i wyznaczyć najodleglejszy wierzchołek? Konstrukcja grafu jest prosta: dla każdej pary wierzchołków sprawdzamy czy odległość między nimi jest co najwyżej $s$ (aby unikać stosowania liczb zmiennoprzecinkowych, zachęcam do porównania kwadratu odległości z $s^2$). Następnie na tak uzyskanym grafie puszczamy $DFS$ lub $BFS$ z wierzchołka startowego i zaznaczamy każdy odwiedzony wierzchołek. Następnie z odwiedzonych wierzchołków wybieramy ten o największej odległości od startowego.
+
+Takie rozwiązanie ma złożoność czasową $\Oh{n^2}$ oraz pamięciową $\Oh{n^2}$, co jest wystarczające dla $n \leq 1000$ jak w zadaniu. Warto zauważyć, że można łatwo zejść ze złożnością pamięciową do $\Oh{n}$ -- nie trzeba trzymać grafu explicite w pamięci. Zarówno przy $BFS$ jak i $DFS$ jedyne co potrzebujemy, to dla danego wierzchołka znaleźć wszystkich jego sąsiadów. Zamiast trzymać to w pamięci, to możemy się przeiterować po wszystkich wierzchołkach i wybrać te, które są sąsiadami aktualnego. Takie rozwiązanie ma tę samą złożoność czasową, ale zużywa znacznie mniej pamięci jeśli graf jest gęsty (ma kwadratowo wiele krawędzi) (w praktyce to rozwiązanie też może być szybsze).
+
+Ciekawostka: zadanie to można rozwiązać w złożności liniowej (z logami), przy użyciu tzw. diagramów Voronoi i triangulacji Delaunay.
+
+\end{document}
