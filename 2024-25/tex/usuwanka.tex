@@ -1,0 +1,51 @@
+\documentclass[]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+
+\newgeometry{left=4cm, right=4cm}
+
+\author{Filip Konieczny}
+\date{20 września 2024}
+\title{Omówienie zadania \texttt{Usuwanka}}
+
+\begin{document}
+\maketitle
+\section{Omówienie}
+
+Idea rozwiązania jest następująca: bierzemy po kolei litery z napisu na wejściu i dopisujemy do napisu pomocniczego. Jeśli w pewnym momencie na końcu napisu pomocniczego znajduje się $k$ razy literka \texttt{b} i jedna literka \texttt{c}, to ściągamy z końca napisu pomocniczego $k+1$ liter i dopisujemy ich indeksy do wyniku.
+
+Pozostaje kwestia implementacji powyższej idei. Na kółku omówiliśmy pomysł, który opierał się na utrzymywaniu na stosie skompresowanej wersji naszego napisu pomocniczego, dzięki czemu mogliśmy patrząc na dwa najwyższe elementy stosu stwierdzić, czy wspomniany warunek jest spełniony. Teraz wykorzystamy do tego sumy prefiksowe.
+
+Zamieńmy w napisie wszystkie \texttt{b} na 1 i \texttt{c} na 0. Ostatnie $k+1$ liter spełnia warunek wtedy i tylko wtedy, gdy ich suma wynosi $k$. Wyobraźmy sobie stan naszej tablicy pomocniczej ($k = 2$):
+
+\[\begin{array}{|l|l|l|}
+    \hline
+
+    \textbf{Stan początkowy} & \textbf{Stan po dodaniu literki } \texttt{b} & \textbf{Stan po usunięciu } $k+1$ \textbf{ liter} \\
+    \hline
+    1~0~0~1 &   1~0~0~1~1 & 1~0 \\
+    \hline
+    
+\end{array}\]
+
+Widzimy, że po dodaniu literki możemy usunąć $k+1$ liter, ponieważ spełniają warunek (suma trzech ostatnich to 2). Jak to sprawdzać? Rozważmy następującą tablicę sum prefiksowych:
+
+\[\begin{array}{|l|l|l|}
+\hline
+    \textbf{Stan początkowy} & \textbf{Stan po dodaniu literki } \texttt{b} & \textbf{Stan po usunięciu } $k+1$ \textbf{ liter} \\
+\hline
+ \hspace{0.3cm} 1~0~0~1 &   \hspace{0.3cm} 1~0~0~1~1 & \hspace{0.3cm} 1~0 \\
+ \hline 
+ 0~1~1~1~2 &   0~1~\textbf{1}~1~2~\textbf{3} & 0~1~1 \\
+ \hline
+    
+\end{array}\]
+
+Odjęcie od siebie pogrubionych wartości pozwala nam stwierdzić, że $k+1$ ostatnich liter spełnia warunek.
+
+Powyższe można zaimplementować trzymając sumy prefiksowe na np. \texttt{vector}, który umożliwia poznanie wartości na dowolnym indeksie oraz dodanie wartości na koniec tablicy - akurat to czego potrzebujemy.
+
+
+\end{document}
